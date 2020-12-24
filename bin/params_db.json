@@ -1,0 +1,10 @@
+{
+    "google": {
+        "passLength": 12,
+        "upper": true,
+        "numeric": true,
+        "punct": true,
+        "other": "",
+        "illegal": ""
+    }
+}
