@@ -6,5 +6,23 @@
         "punct": true,
         "other": "",
         "illegal": ""
+    },
+
+    "yahoo": {
+        "passLength": 12,
+        "upper": true,
+        "numeric": true,
+        "punct": true,
+        "other": "",
+        "illegal": ""
+    },
+
+    "digikey": {
+        "passLength": 12,
+        "upper": true,
+        "numeric": true,
+        "punct": true,
+        "other": "",
+        "illegal": ""
     }
 }

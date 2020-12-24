@@ -1,21 +1,6 @@
 #!/usr/bin/env python3
 
-from src.passGen import PasswordGenerator as pg
-
-import xml.etree.ElementTree as et
 import sys
-
-
-class KeyLocker():
-    def __init__(self):
-        try:
-            with open('bin/storage.json') as f:
-                self.__accounts_list = f.read()
-        except:
-            pass
-
-    def add(self):
-        pass
 
 
 if __name__ == '__main__':
@@ -56,7 +41,6 @@ if __name__ == '__main__':
         elif cmd == 'Exit':
             exit()
 
-    kl = KeyLocker()
 
     while(1):
         printMenu()
