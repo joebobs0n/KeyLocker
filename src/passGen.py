@@ -5,14 +5,10 @@ import numpy as np
 
 
 class PasswordGenerator():
-    def __init__(self, dict=None, passLength=20, upper=True, numeric=True, punct=False, other='', illegal=''):
+    def __init__(self, params):
         self.valid_chars = []
         self.symbols = []
-
-        if dict != None:
-            self.defineReqs_dict(dict)
-        else:
-            self.defineReqs_args(passLength, upper, numeric, punct, other, illegal)
+        self.__setup(params['passLength'], params['upper'], params['numeric'], params['punct'], params['other'], params['illegal'])
 
     def __setup(self, passLength, upper, numeric, punct, other, illegal):
         self.length = passLength
@@ -80,12 +76,6 @@ class PasswordGenerator():
 
         return password
 
-    def defineReqs_args(self, passLength, upper, numeric, punct, other, illegal):
-        self.__setup(passLength, upper, numeric, punct, other, illegal)
-
-    def defineReqs_dict(self, dict):
-        self.__setup(dict['passLength'], dict['upper'], dict['numeric'], dict['punct'], dict['other'], dict['illegal'])
-
     def generatePassword(self):
         pass_temp = []
         for i in range(self.length):
@@ -100,21 +90,14 @@ class PasswordGenerator():
 
 
 if __name__ == '__main__':
-    try:
-        pg = PasswordGenerator(passLength=8, upper=True, numeric=True, punct=True, other='', illegal='')
-        for i in range(5):
-            print(pg.generatePassword())
-    except ValueError as error:
-        print(error)
+    import os, sys
+    import json
+    os.chdir(sys.path[0])
 
-    myParams = {
-        'passLength': 8,
-        'upper': True,
-        'numeric': True,
-        'punct': False,
-        'other': '',
-        'illegal': 'ABCDEFGHIJKLMNOPQRSTUVWXY012345678'
-    }
+    with open('../bin/params_db.json') as f:
+        temp = json.load(f)
+        myParams = temp['default']
+        print(myParams)
     try:
         pg = PasswordGenerator(dict=myParams)
         for i in range(5):

@@ -1,6 +1,15 @@
 {
-    "google": {
-        "passLength": 12,
+    "default": {
+        "passLength": 20,
+        "upper": true,
+        "numeric": true,
+        "punct": true,
+        "other": "",
+        "illegal": "()[]{}<>\\/|`"
+    },
+
+    "all_20": {
+        "passLength": 20,
         "upper": true,
         "numeric": true,
         "punct": true,
@@ -8,21 +17,21 @@
         "illegal": ""
     },
 
-    "yahoo": {
-        "passLength": 12,
+    "no_punct_20": {
+        "passLength": 20,
         "upper": true,
         "numeric": true,
-        "punct": true,
+        "punct": false,
         "other": "",
         "illegal": ""
     },
 
-    "digikey": {
-        "passLength": 12,
+    "min_punct_20": {
+        "passLength": 20,
         "upper": true,
         "numeric": true,
-        "punct": true,
-        "other": "",
+        "punct": false,
+        "other": ".?!,_",
         "illegal": ""
     }
 }
