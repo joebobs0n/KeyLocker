@@ -87,22 +87,3 @@ class PasswordGenerator():
             pass_temp = self.__fixPassword(pass_temp, hasUpper, hasNumeric, hasSymbol)
 
         return ''.join(pass_temp)
-
-
-if __name__ == '__main__':
-    import os, sys
-    import json
-    os.chdir(sys.path[0])
-
-    with open('../bin/params_db.json') as f:
-        temp = json.load(f)
-        myParams = temp['default']
-        print(myParams)
-    try:
-        pg = PasswordGenerator(dict=myParams)
-        for i in range(5):
-            print(pg.generatePassword())
-    except ValueError as error:
-        print(error)
-
-    exit()

@@ -1,5 +1,0 @@
-com
-org
-io
-edu
-mil

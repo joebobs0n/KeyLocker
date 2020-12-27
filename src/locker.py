@@ -1,54 +1,134 @@
 #!/usr/bin/env python3
 
 from src.passGen import PasswordGenerator as pg
-from src.account import Account as ac
 
 from pathlib import Path
-import json
+from cryptography.fernet import Fernet
+import json, re
+
+
+def siteCleaner(site):
+    possible_tld = ''
+    site_cleaned = site
+
+    tld_path = Path('bin/tld')
+    if not tld_path.exists():
+        with open(tld_path, 'w') as f:
+            f.write('com\norg\nio\nedu')
+
+    with open(tld_path) as f:
+        possible_tld = f.read()
+    possible_tld = re.split('\n|\ ', possible_tld)
+    possible_tld = [tld for tld in possible_tld if tld != '']
+    possible_tld = '|'.join(possible_tld)
+
+    http_found = re.finditer(f'^(http(s)?://)?(www\.)?', site)
+    for remove in http_found:
+        site_cleaned = site_cleaned.replace(remove[0], '')
+
+    tld_found = re.finditer(f'\.({possible_tld}).*', site)
+    for remove in tld_found:
+        site_cleaned = site_cleaned.replace(remove[0], '')
+    site_cleaned = site_cleaned.lower()
+
+    return site_cleaned
 
 
 class Locker():
     def __init__(self):
-        self.__params_db = Path('bin/params_db.json')
-        if not self.__params_db.exists():
-            with open(self.__params_db, 'w') as f:
+        self.__data = Path('data')
+        self.__key = self.__data / 'key.key'
+        self.__encoding = 'utf-8'
+
+        if not self.__key.exists():
+            key = Fernet.generate_key()
+            with open(self.__key, 'wb') as f:
+                f.write(key)
+
+    def __loadKey(self):
+        with open(self.__key, 'rb') as f:
+            return f.read()
+
+    def __writeEncryptedData(self, path, data):
+        site_encoded = data.encode(self.__encoding)
+        site_encrypted = Fernet(self.__loadKey()).encrypt(site_encoded)
+
+        with open(path, 'wb') as f:
+            f.write(site_encrypted)
+
+    def __readEncryptedData(self, path):
+        with open(path, 'rb') as f:
+            data_encrypted = f.read()
+
+        data_decrypted = Fernet(self.__loadKey()).decrypt(data_encrypted)
+        return data_decrypted.decode(self.__encoding)
+
+    def __loadSiteDictionary(self, site, username):
+        site_cleaned = siteCleaner(site)
+        site_path = self.__data / site_cleaned
+        site_dict = {}
+        userExists = False
+
+        if site_path.exists():
+            site_dict = self.access(site_cleaned)
+            try:
+                site_dict[username]
+                userExists = True
+            except KeyError as err:
                 pass
 
-        self.__accounts_list = Path('bin/accounts_list.txt')
-        if not self.__accounts_list.exists():
-            with open(self.__accounts_db, 'w') as f:
-                pass
+        return site_dict, userExists, site_cleaned
 
-    def add(self, site, username, dict=None):
-        # TODO: check if site already has an account
-        # TODO: if it does, then check if it already has the same username
-        # TODO: if it does, raise error and inform user
-        # TODO: if it does not, create new account with same site
+    def access(self, site):
+        site_cleaned = siteCleaner(site)
+        data_str = self.__readEncryptedData(self.__data / site_cleaned)
+        data_json = json.loads(data_str)
 
-        params = dict
-        if dict == None:
+        return data_json
+
+    def add(self, site, username, params=None, pw_curr=None):
+        site_dict, userExists, site_cleaned = self.__loadSiteDictionary(site, username)
+        if userExists:
+            return f'Account using {username} for {site} already exists'
+
+        if params == None:
             with open('bin/params_db.json') as f:
                 params = json.load(f)['default']
 
         generator = pg(params)
         new_pw = generator.generatePassword()
-        account = ac(site, username, new_pw, params)
-        ac_xml = account.toXML()
 
-        print(ac_xml.attrib)
-        print(ac_xml.attrib['password'])
+        site_dict[username] = {}
+        site_dict[username]['password'] = new_pw
+        site_dict[username]['past_pwds'] = [] if pw_curr == None else [pw_curr]
+        site_dict[username]['params'] = params
 
-        # TODO: encrypt information and write to file
-        # TODO: if creating new account for existing site, append to file
+        self.__writeEncryptedData(self.__data / site_cleaned, json.dumps(site_dict))
+        return 'Account added'
 
-    def access(self, site):
-        username = ''
-        password = ''
+    def newPassword(self, site, username):
+        site_dict, userExists, site_cleaned = self.__loadSiteDictionary(site, username)
+        if not userExists:
+            return f'No account using {username} for {site} exists'
 
-        return username, password
+        generator = pg(site_dict[username]['params'])
+        new_pw = generator.generatePassword()
+        site_dict[username]['past_pwds'].append(site_dict[username]['password'])
+        site_dict[username]['password'] = new_pw
 
-    def newPassword(self, site):
-        pass
+        self.__writeEncryptedData(self.__data / site_cleaned, json.dumps(site_dict))
+        return 'Password updated'
 
-    def listSites(self):
-        pass
+    def newParams(self, site, username, params):
+        site_dict, userExists, site_cleaned = self.__loadSiteDictionary(site, username)
+        if not userExists:
+            return f'No account using {username} for {site} exists'
+
+        site_dict[username]['params'] = params
+        generator = pg(params)
+        new_pw = generator.generatePassword()
+        site_dict[username]['past_pwds'].append(site_dict[username]['password'])
+        site_dict[username]['password'] = new_pw
+
+        self.__writeEncryptedData(self.__data / site_cleaned, json.dumps(site_dict))
+        return 'Params updated'
