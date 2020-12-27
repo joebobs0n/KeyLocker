@@ -4,12 +4,21 @@ from src.passGen import PasswordGenerator as pg
 
 from pathlib import Path
 from cryptography.fernet import Fernet
+import http.client as hc
 import json, re
 
 
 def siteCleaner(site):
     possible_tld = ''
     site_cleaned = site
+
+    conn = hc.HTTPConnection(site, timeout=5)
+    try:
+        conn.request("HEAD", "/")
+        conn.close()
+    except:
+        conn.close()
+        raise Exception(f'Cannot validate/ping {site}')
 
     tld_path = Path('bin/tld')
     if not tld_path.exists():

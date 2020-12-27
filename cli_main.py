@@ -3,6 +3,7 @@
 import sys
 import os
 
+
 options = [
     'Add New Account',
     'View Account',
@@ -12,6 +13,7 @@ options = [
     'Export Accounts to XML',
     'Exit'
 ]
+
 
 def printMenu():
     os.system('cls')
