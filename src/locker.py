@@ -12,15 +12,15 @@ def siteCleaner(site):
     possible_tld = ''
     site_cleaned = site
 
-    conn = hc.HTTPConnection(site, timeout=5)
-    try:
-        conn.request("HEAD", "/")
-        conn.close()
-    except:
-        conn.close()
-        raise Exception(f'Cannot validate/ping {site}')
+    # conn = hc.HTTPConnection(site, timeout=5)
+    # try:
+    #     conn.request("HEAD", "/")
+    #     conn.close()
+    # except:
+    #     conn.close()
+    #     raise Exception(f'Cannot validate/ping {site}')
 
-    tld_path = Path('bin/tld')
+    tld_path = Path('bin/domains')
     if not tld_path.exists():
         with open(tld_path, 'w') as f:
             f.write('com\norg\nio\nedu')

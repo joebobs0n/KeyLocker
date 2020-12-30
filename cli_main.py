@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
-import os
+import sys, os
 
 
 options = [
     'Add New Account',
     'View Account',
-    'Change Password for Account',
-    'Remove Account',
-    'Import Accounts from XML',
-    'Export Accounts to XML',
-    'Exit'
+    'Generate New Password'
 ]
 
 
@@ -29,19 +24,13 @@ def switchAction(cmd):
         pass
     elif cmd == 'View Account':
         pass
-    elif cmd == 'Change Password for Account':
+    elif cmd == 'Generate New Password':
         pass
-    elif cmd == 'Remove Account':
-        pass
-    elif cmd == 'Import Accounts from XML':
-        pass
-    elif cmd == 'Export Accounts to XML':
-        pass
-    elif cmd == 'Exit':
-        exit()
 
 
 if __name__ == '__main__':
+    os.chdir(sys.path[0])
+
     while(1):
         printMenu()
         x = ''
@@ -58,3 +47,4 @@ if __name__ == '__main__':
                 print(type(x), options[x])
                 switchAction(options[x])
                 input()
+
