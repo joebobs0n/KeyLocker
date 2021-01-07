@@ -67,21 +67,35 @@
                             </b></h4>
                     </div>
                 </div>
-
-                <br>
-                <br>
-
             </div>
         </div>
+    </div>
 
 
-        <!-- The JS page for the MQTT things -->
-        <script src="../js/chat.js"></script>
-        <!-- The JS page for the theme application -->
-        <script src="../js/theme.js"></script>
-        <!-- The JS pages for the page specific things -->
-        <script src="../js/index.js"></script>
-        <script src="../js/settings.js"></script>
+    <!-- The Connection Modal -->
+    <div id="connectModal" class="modal centered cModal">
+        <div class="connect_bubble">
+            <div class="info">
+                <input id="hostVal" class="form-field" type="text" placeholder="Username"/>
+            </div>
+            <br />
+            <div class="info">
+                <input id="portVal" class="form-field" type="text" placeholder="Password"/>
+            </div>
+            <br />
+            <button id="modalConnectBtn">Login</button>
+            <button id="modalCloseBtn">Close</button>
+        </div>
+    </div>
+
+
+    <!-- The JS page for the MQTT things -->
+    <script src="../js/chat.js"></script>
+    <!-- The JS page for the theme application -->
+    <script src="../js/theme.js"></script>
+    <!-- The JS pages for the page specific things -->
+    <script src="../js/index.js"></script>
+    <script src="../js/settings.js"></script>
 
 </body>
 

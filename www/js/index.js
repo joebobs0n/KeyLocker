@@ -36,7 +36,7 @@ document.getElementById("connectBtn").addEventListener("click", function () {
 
 document.getElementById("disconnectBtn").addEventListener("click", function () {
 
-    var really = confirm("Are you sure you want to disconnect?")
+    var really = confirm("Are you sure you want to logout?")
 
     if (really) {
         if (client.connected) {
