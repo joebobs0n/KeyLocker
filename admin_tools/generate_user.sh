@@ -8,5 +8,4 @@ sudo passwd $username
 #sudo cp -Rp --attributes-only /home/pi/KeyLocker/userdir/* /home/$username/.
 sudo rsync -Larvtg /home/pi/KeyLocker/userdir/. /home/$username/.
 
-sudo chgrp $username /home/$username/configs -R
-sudo chgrp $username /home/$username/data
+sudo chgrp $username /home/$username -R
