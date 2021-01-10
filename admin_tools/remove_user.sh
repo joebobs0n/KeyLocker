@@ -1,6 +1,6 @@
 #!/bin/bash
 
-printf "\033[91mThis will remove the given user and ALL accompanying data (including encrypted password data).\nAre you sure you wish to continue? (y/n):\033[0m "
+printf "\033[91mThis will remove the given user and ALL accompanying data (including encrypted password data).\033[0m\nAre you sure you wish to continue? (y/n): "
 read confirm
 
 if [ $confirm == "y" ]; then
@@ -14,3 +14,4 @@ if [ $confirm == "y" ]; then
 
     printf "\033[93m[INFO]\033[0m The user \033[91m$username\033[0m has been successfully removed.\n"
 fi
+

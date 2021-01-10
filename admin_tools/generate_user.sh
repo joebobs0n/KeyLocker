@@ -15,3 +15,4 @@ sudo chgrp $username /home/$username/data
 
 printf "\033[93m[INFO]\033[0m The user \033[92m$username\033[0m has been successfully created.\n"
 printf "\033[93m[INFO]\033[0m Useful scripts such as password change are located in the /home/$username/scripts/ directory.\n"
+
