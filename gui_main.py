@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 from PyQt5 import QtWidgets
 from src.LocalApp import LocalApp

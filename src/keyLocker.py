@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 from src.passGen import PasswordGenerator as pg
 
 from pathlib import Path
 from cryptography.fernet import Fernet
 import http.client as hc
-import json, re
+import json, re, os
 
 
 def siteCleaner(site):
