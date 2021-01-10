@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowOpacity">
+   <double>0.750000000000000</double>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
