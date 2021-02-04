@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from src.locker import Locker as lock
+from src.keyLocker import Locker as lock
 import os, sys, json
 
 

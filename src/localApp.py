@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from PyQt5 import uic, QtGui
+from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow
 
 

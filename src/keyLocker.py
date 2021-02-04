@@ -4,21 +4,12 @@ from src.passGen import PasswordGenerator as pg
 
 from pathlib import Path
 from cryptography.fernet import Fernet
-import http.client as hc
 import json, re, os
 
 
 def siteCleaner(site):
     possible_tld = ''
     site_cleaned = site
-
-    # conn = hc.HTTPConnection(site, timeout=5)
-    # try:
-    #     conn.request("HEAD", "/")
-    #     conn.close()
-    # except:
-    #     conn.close()
-    #     raise Exception(f'Cannot validate/ping {site}')
 
     tld_path = Path('bin/domains')
     if not tld_path.exists():
@@ -87,6 +78,9 @@ class Locker():
                 pass
 
         return site_dict, userExists, site_cleaned
+
+    def __getLogin(self):
+        pass
 
     def access(self, site):
         site_cleaned = siteCleaner(site)

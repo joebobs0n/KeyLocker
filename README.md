@@ -26,11 +26,7 @@
       - [slightly less cheap option with acrylic case specifically for raspberry pi through HDMI jack](https://www.amazon.com/Miuzei-Raspberry-Full-Angle-Heatsinks-Raspbian/dp/B07XBVF1C9/ref=sr_1_3?dchild=1&keywords=3.5%22+raspberry+pi+4+touchscreen&qid=1609104965&refinements=p_85%3A2470955011&rnid=2470954011&rps=1&sr=8-3)
 
 - [ ] **Apache 2.0 (localhost)**
-  - Functionality
-    - [ ] add new account
-    - [ ] view sites/usernames (not passwords)
-  - Operation
-    - [ ] Wyatt
+  - see notes below
 
 </br>
 
@@ -54,3 +50,22 @@
   - used to clean inputs and file management
   - additional domains can be added (i.e. com, org, edu ...)
 - [x] `bin/params_db.json` exists for user add/use password parameter profiles
+
+---
+
+## 3 Feb 2021 Notes:
+- **need** to host website to serve passwords externally (mainly to phones); otherwise this project is more annoying than helpful
+  - need own web server ([main reference point](https://youtu.be/QdHvS0D1zAI))
+    - [`node`](https://nodejs.org/en/) - javascript io interpreter
+      - install:
+        - `curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -`
+        - `sudo apt install nodejs`
+        - `sudo apt install yarn`
+    - [`nginx`](https://www.nginx.com/) - web server
+      - install:
+        - `sudo apt install nginx`
+    - [`no-ip`](https://www.noip.com/) - dynamic to static ip handler
+      - [installation](https://www.noip.com/support/knowledgebase/install-ip-duc-onto-raspberry-pi/)
+    - [`router port forwarding`](https://portforward.com/)
+    - [`cloudflare`](https://www.cloudflare.com/) - ddos protection
+      - is this really needed? seems that it needs a dedicated pi-hole attached to the router to handle requests. [sauce](https://blog.cloudflare.com/deploying-gateway-using-a-raspberry-pi-dns-over-https-and-pi-hole/).
